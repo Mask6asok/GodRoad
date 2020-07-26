@@ -1,0 +1,55 @@
+# part A, copy function
+    .pos 0
+    irmovq stack, %rsp
+    call main
+    halt
+
+# data 
+    .pos 0x100
+src:
+    .quad 0x001
+    .quad 0x010
+    .quad 0x100
+    
+    .pos 0x200
+dst:
+    .quad 0x000
+    .quad 0x000
+    .quad 0x000
+
+main:
+    irmovq src, %rdi
+    irmovq dst, %rsi
+    irmovq $3, %rdx
+    call copy
+    ret
+
+copy:
+    pushq %r8   # count to zero
+    pushq %r9   # count step
+    pushq %r10  # temp
+    pushq %r11  # memory step
+    # pushq 
+    irmovq $0, %rax
+    rrmovq %rax, %r8
+    irmovq $1, %r9
+    irmovq $8, %r11
+loop:
+    subq %r8, %rdx
+    jle end
+    mrmovq 0(%rdi), %r10    # copy
+    rmmovq %r10, 0(%rsi)
+    xorq %r10, %rax
+    subq %r9, %rdx
+    addq %r11, %rdi
+    addq %r11, %rsi
+    jmp loop
+end:
+    popq %r11
+    popq %r10
+    popq %r9
+    popq %r8
+    ret
+
+    .pos 0x400
+stack:

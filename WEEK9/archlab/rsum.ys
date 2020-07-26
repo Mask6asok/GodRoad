@@ -1,0 +1,39 @@
+# part A, sum function use recursion
+    .pos 0
+    irmovq stack, %rsp
+    call main
+    halt
+
+# list data
+    .align 8
+elem1:
+    .quad 0x001
+    .quad elem2
+elem2:
+    .quad 0x010
+    .quad elem3
+elem3:
+    .quad 0x100
+    .quad 0
+
+main:
+    irmovq elem1, %rdi
+    call rsum
+    ret
+
+rsum:
+    pushq %r8
+    irmovq $0, %rax
+    andq %rdi, %rdi
+    je return               # null elem, return
+    mrmovq 0(%rdi), %r8     # get list elem value
+    mrmovq 8(%rdi), %rdi    # get next elem
+    call rsum               # recursion result in rax
+    addq %r8, %rax          # sum
+return:
+    popq %r8
+    ret
+
+    .pos 0x400
+stack:
+

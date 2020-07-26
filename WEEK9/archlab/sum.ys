@@ -1,0 +1,38 @@
+# Part A, sum function use iteration
+    .pos 0
+    irmovq stack, %rsp
+    call main
+    halt
+
+# list data
+    .align 8
+elem1:
+    .quad 0x001
+    .quad elem2
+elem2:
+    .quad 0x010
+    .quad elem3
+elem3:
+    .quad 0x100
+    .quad 0
+
+main:
+    irmovq elem1, %rdi
+    call sum
+    ret
+
+sum:
+    irmovq $0, %rax
+    jmp loop_end
+loop:
+    mrmovq 0(%rdi), %rsi    # *rdi -> rsi
+    addq %rsi, %rax         # rax += rsi
+    mrmovq 8(%rdi), %rsi    # *(rdi + 8) -> rsi
+    rrmovq %rsi, %rdi       # rsi -> rdi
+loop_end:
+    andq %rdi, %rdi         # rdi == 0 ?
+    jne loop
+    ret
+
+    .pos 0x400
+stack:
