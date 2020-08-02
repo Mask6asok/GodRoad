@@ -6,5 +6,7 @@
 
 [datalab](./WEEK9/datalab/datalab.md)，[attacklab](./WEEK9/attacklab/attacklab.md)，[atchlab](./WEEK9/archlab/archlab.md)
 
+## 第十周
 
+[cachelab](./WEEK10/cachelab/cachelab.md)，[shelllab](./WEEK10/shelllab/shelllab.md)，[cachelab](./WEEK10/malloclab/malloclab.md)
 
